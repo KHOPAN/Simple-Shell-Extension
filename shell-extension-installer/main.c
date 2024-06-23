@@ -11,6 +11,10 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
+	if(!RegisterContextMenuHandler()) {
+		return 1;
+	}
+
 	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
 	printf("Installation finished\n");
 	return 0;
