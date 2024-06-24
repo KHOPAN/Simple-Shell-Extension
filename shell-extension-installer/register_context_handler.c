@@ -3,7 +3,7 @@
 #include "installer.h"
 
 BOOL RegisterContextMenuHandler() {
-	LPWSTR valueContextMenuHandler = KHFormatMessageW(L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SIMPLE_SHELL_EXTENSION.Data1, CLSID_SIMPLE_SHELL_EXTENSION.Data2, CLSID_SIMPLE_SHELL_EXTENSION.Data3, CLSID_SIMPLE_SHELL_EXTENSION.Data4[0], CLSID_SIMPLE_SHELL_EXTENSION.Data4[1], CLSID_SIMPLE_SHELL_EXTENSION.Data4[2], CLSID_SIMPLE_SHELL_EXTENSION.Data4[3], CLSID_SIMPLE_SHELL_EXTENSION.Data4[4], CLSID_SIMPLE_SHELL_EXTENSION.Data4[5], CLSID_SIMPLE_SHELL_EXTENSION.Data4[6], CLSID_SIMPLE_SHELL_EXTENSION.Data4[7]);
+	LPWSTR valueContextMenuHandler = KHFormatMessageW(L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SimpleShellExtension.Data1, CLSID_SimpleShellExtension.Data2, CLSID_SimpleShellExtension.Data3, CLSID_SimpleShellExtension.Data4[0], CLSID_SimpleShellExtension.Data4[1], CLSID_SimpleShellExtension.Data4[2], CLSID_SimpleShellExtension.Data4[3], CLSID_SimpleShellExtension.Data4[4], CLSID_SimpleShellExtension.Data4[5], CLSID_SimpleShellExtension.Data4[6], CLSID_SimpleShellExtension.Data4[7]);
 
 	if(!valueContextMenuHandler) {
 		KHWin32ConsoleErrorW(ERROR_FUNCTION_FAILED, L"KHFormatMessageW");

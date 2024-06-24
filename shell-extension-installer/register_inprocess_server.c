@@ -5,7 +5,7 @@
 BOOL RegisterInProcessServer() {
 	const LPWSTR pathFileShellExtension = L"D:\\GitHub Repository\\Simple-Shell-Extension\\x64\\Debug\\shell-extension.dll";
 	const LPWSTR valueThreadingModel = L"Apartment";
-	LPWSTR pathRegistryRoot = KHFormatMessageW(L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SIMPLE_SHELL_EXTENSION.Data1, CLSID_SIMPLE_SHELL_EXTENSION.Data2, CLSID_SIMPLE_SHELL_EXTENSION.Data3, CLSID_SIMPLE_SHELL_EXTENSION.Data4[0], CLSID_SIMPLE_SHELL_EXTENSION.Data4[1], CLSID_SIMPLE_SHELL_EXTENSION.Data4[2], CLSID_SIMPLE_SHELL_EXTENSION.Data4[3], CLSID_SIMPLE_SHELL_EXTENSION.Data4[4], CLSID_SIMPLE_SHELL_EXTENSION.Data4[5], CLSID_SIMPLE_SHELL_EXTENSION.Data4[6], CLSID_SIMPLE_SHELL_EXTENSION.Data4[7]);
+	LPWSTR pathRegistryRoot = KHFormatMessageW(L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SimpleShellExtension.Data1, CLSID_SimpleShellExtension.Data2, CLSID_SimpleShellExtension.Data3, CLSID_SimpleShellExtension.Data4[0], CLSID_SimpleShellExtension.Data4[1], CLSID_SimpleShellExtension.Data4[2], CLSID_SimpleShellExtension.Data4[3], CLSID_SimpleShellExtension.Data4[4], CLSID_SimpleShellExtension.Data4[5], CLSID_SimpleShellExtension.Data4[6], CLSID_SimpleShellExtension.Data4[7]);
 
 	if(!pathRegistryRoot) {
 		KHWin32ConsoleErrorW(ERROR_FUNCTION_FAILED, L"KHFormatMessageW");
