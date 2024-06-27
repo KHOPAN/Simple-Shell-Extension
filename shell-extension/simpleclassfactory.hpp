@@ -8,9 +8,9 @@ public:
 protected:
 	~SimpleClassFactory();
 public:
-	IFACEMETHODIMP QueryInterface(REFIID identifier, void** output);
-	IFACEMETHODIMP_(ULONG) AddRef();
-	IFACEMETHODIMP_(ULONG) Release();
-	IFACEMETHODIMP CreateInstance(IUnknown* unknown, REFIID identifier, void** output);
-	IFACEMETHODIMP LockServer(BOOL lock);
+	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID identifier, _COM_Outptr_ void __RPC_FAR* __RPC_FAR* output);
+	ULONG STDMETHODCALLTYPE AddRef(void);
+	ULONG STDMETHODCALLTYPE Release(void);
+	HRESULT STDMETHODCALLTYPE CreateInstance(_In_opt_ IUnknown* unknown, _In_ REFIID identifier, _COM_Outptr_ void** output);
+	HRESULT STDMETHODCALLTYPE LockServer(BOOL lock);
 };

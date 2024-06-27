@@ -21,9 +21,11 @@
   <ItemGroup>
     <ClCompile Include="simpleclassfactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="simpleshellextension.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="simpleclassfactory.hpp" />
+    <ClInclude Include="simpleshellextension.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
