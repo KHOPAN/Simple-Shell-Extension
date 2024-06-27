@@ -15,21 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shellextension.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="factory.cpp">
+    <ClCompile Include="simpleclassfactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="extension.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="factory.hpp">
+    <ClInclude Include="simpleclassfactory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

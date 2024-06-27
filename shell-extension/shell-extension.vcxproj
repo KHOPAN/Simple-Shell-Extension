@@ -19,13 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="factory.cpp" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="shellextension.cpp" />
+    <ClCompile Include="simpleclassfactory.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="extension.h" />
-    <ClInclude Include="factory.hpp" />
+    <ClInclude Include="simpleclassfactory.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

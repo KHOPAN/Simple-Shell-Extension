@@ -21,7 +21,7 @@
     <ClCompile Include="register_inprocess_server.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="register_context_handler.c">
+    <ClCompile Include="register_namespace_extension.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
