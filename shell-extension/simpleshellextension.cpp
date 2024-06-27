@@ -14,7 +14,6 @@ SimpleShellExtension::~SimpleShellExtension() {
 
 HRESULT STDMETHODCALLTYPE SimpleShellExtension::QueryInterface(REFIID identifier, _COM_Outptr_ void __RPC_FAR* __RPC_FAR* output) {
 	static const QITAB supportedInterfaces[] = {
-		QITABENT(SimpleShellExtension, IShellExtInit),
 		QITABENT(SimpleShellExtension, IShellFolder),
 		{0}
 	};
@@ -34,10 +33,6 @@ ULONG STDMETHODCALLTYPE SimpleShellExtension::Release(void) {
 	}
 
 	return referenceCount;
-}
-
-HRESULT STDMETHODCALLTYPE SimpleShellExtension::Initialize(_In_opt_ PCIDLIST_ABSOLUTE itemList, _In_opt_ IDataObject* object, _In_opt_ HKEY key) {
-	return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE SimpleShellExtension::ParseDisplayName(__RPC__in_opt HWND window, __RPC__in_opt IBindCtx* context, __RPC__in_string LPWSTR displayName, _Reserved_ ULONG* pchEaten, __RPC__deref_out_opt PIDLIST_RELATIVE* ppidl, __RPC__inout_opt ULONG* pdwAttributes) {
@@ -73,7 +68,22 @@ HRESULT STDMETHODCALLTYPE SimpleShellExtension::GetUIObjectOf(__RPC__in_opt HWND
 }
 
 HRESULT STDMETHODCALLTYPE SimpleShellExtension::GetDisplayNameOf(__RPC__in_opt PCUITEMID_CHILD identifier, SHGDNF flags, __RPC__out STRRET* outputName) {
-	return E_NOTIMPL;
+	if(!outputName) {
+		return E_INVALIDARG;
+	}
+
+	const LPCWSTR text = L"Hello, world!";
+	outputName->uType = STRRET_WSTR;
+	size_t size = (wcslen(text) + 1) * sizeof(WCHAR);
+	LPWSTR output = static_cast<LPWSTR>(CoTaskMemAlloc(size));
+
+	if(!output) {
+		return E_OUTOFMEMORY;
+	}
+
+	memcpy(output, text, size);
+	outputName->pOleStr = output;
+	return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE SimpleShellExtension::SetNameOf(_In_opt_ HWND window, _In_ PCUITEMID_CHILD pidl, _In_ LPCWSTR pszName, _In_ SHGDNF uFlags, _Outptr_opt_ PITEMID_CHILD* ppidlOut) {

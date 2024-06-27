@@ -1,6 +1,6 @@
 #include <ShlObj.h>
 
-class SimpleShellExtension : public IShellExtInit, public IShellFolder {
+class SimpleShellExtension : public IShellFolder {
 private:
 	long classReferenceCount;
 public:
@@ -11,7 +11,6 @@ public:
 	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID identifier, _COM_Outptr_ void __RPC_FAR* __RPC_FAR* output);
 	ULONG STDMETHODCALLTYPE AddRef(void);
 	ULONG STDMETHODCALLTYPE Release(void);
-	HRESULT STDMETHODCALLTYPE Initialize(_In_opt_ PCIDLIST_ABSOLUTE itemList, _In_opt_ IDataObject* object, _In_opt_ HKEY key);
 	HRESULT STDMETHODCALLTYPE ParseDisplayName(__RPC__in_opt HWND window, __RPC__in_opt IBindCtx* context, __RPC__in_string LPWSTR displayName, _Reserved_ ULONG* pchEaten, __RPC__deref_out_opt PIDLIST_RELATIVE* ppidl, __RPC__inout_opt ULONG* pdwAttributes);
 	HRESULT STDMETHODCALLTYPE EnumObjects(__RPC__in_opt HWND window, SHCONTF grfFlags, __RPC__deref_out_opt IEnumIDList** ppenumIDList);
 	HRESULT STDMETHODCALLTYPE BindToObject(__RPC__in PCUIDLIST_RELATIVE pidl, __RPC__in_opt IBindCtx* pbc, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppv);
