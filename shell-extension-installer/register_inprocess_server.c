@@ -3,48 +3,45 @@
 #include "installer.h"
 
 BOOL RegisterInProcessServer() {
-	const LPWSTR pathFileShellExtension = L"D:\\GitHub Repository\\Simple-Shell-Extension\\x64\\Debug\\shell-extension.dll";
-	const LPWSTR valueThreadingModel = L"Apartment";
-	LPWSTR pathRegistryRoot = KHFormatMessageW(L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SimpleShellExtension.Data1, CLSID_SimpleShellExtension.Data2, CLSID_SimpleShellExtension.Data3, CLSID_SimpleShellExtension.Data4[0], CLSID_SimpleShellExtension.Data4[1], CLSID_SimpleShellExtension.Data4[2], CLSID_SimpleShellExtension.Data4[3], CLSID_SimpleShellExtension.Data4[4], CLSID_SimpleShellExtension.Data4[5], CLSID_SimpleShellExtension.Data4[6], CLSID_SimpleShellExtension.Data4[7]);
+	LPWSTR pathExtensionRoot = KHFormatMessageW(L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}", CLSID_SimpleShellExtension.Data1, CLSID_SimpleShellExtension.Data2, CLSID_SimpleShellExtension.Data3, CLSID_SimpleShellExtension.Data4[0], CLSID_SimpleShellExtension.Data4[1], CLSID_SimpleShellExtension.Data4[2], CLSID_SimpleShellExtension.Data4[3], CLSID_SimpleShellExtension.Data4[4], CLSID_SimpleShellExtension.Data4[5], CLSID_SimpleShellExtension.Data4[6], CLSID_SimpleShellExtension.Data4[7]);
 
-	if(!pathRegistryRoot) {
+	if(!pathExtensionRoot) {
 		KHWin32ConsoleErrorW(ERROR_FUNCTION_FAILED, L"KHFormatMessageW");
 		return FALSE;
 	}
 
-	HKEY keyRoot;
-	LSTATUS error = RegCreateKeyExW(HKEY_CLASSES_ROOT, pathRegistryRoot, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY, NULL, &keyRoot, NULL);
-	LocalFree(pathRegistryRoot);
+	HKEY keyExtensionRoot;
+	LSTATUS error = RegCreateKeyExW(HKEY_CLASSES_ROOT, pathExtensionRoot, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY, NULL, &keyExtensionRoot, NULL);
+	LocalFree(pathExtensionRoot);
+	BOOL returnValue = FALSE;
 
 	if(error) {
 		KHWin32ConsoleErrorW(error, L"RegCreateKeyExW");
-		return FALSE;
+		goto closeKeyExtensionRoot;
 	}
 
-	HKEY keyServer;
-	error = RegCreateKeyExW(keyRoot, L"InprocServer32", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, &keyServer, NULL);
-	RegCloseKey(keyRoot);
+	HKEY keyInProcServer32;
+	error = RegCreateKeyExW(keyExtensionRoot, L"InProcServer32", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, &keyInProcServer32, NULL);
 
 	if(error) {
 		KHWin32ConsoleErrorW(error, L"RegCreateKeyExW");
-		return FALSE;
+		goto closeKeyExtensionRoot;
 	}
 
-	error = RegSetValueExW(keyServer, NULL, 0, REG_SZ, (const BYTE*) pathFileShellExtension, (DWORD) ((wcslen(pathFileShellExtension) + 1) * sizeof(WCHAR)));
-
-	if(error) {
-		KHWin32ConsoleErrorW(error, L"RegSetValueExW");
-		RegCloseKey(keyServer);
-		return FALSE;
+	if(!KHWin32RegistrySetStringValueW(keyInProcServer32, NULL, L"D:\\GitHub Repository\\Simple-Shell-Extension\\x64\\Debug\\shell-extension.dll")) {
+		KHWin32ConsoleErrorW(GetLastError(), L"KHWin32RegistrySetStringValueW");
+		RegCloseKey(keyInProcServer32);
+		goto closeKeyExtensionRoot;
 	}
 
-	error = RegSetValueExW(keyServer, L"ThreadingModel", 0, REG_SZ, (const BYTE*) valueThreadingModel, (DWORD) ((wcslen(valueThreadingModel) + 1) * sizeof(WCHAR)));
-	RegCloseKey(keyServer);
-
-	if(error) {
-		KHWin32ConsoleErrorW(error, L"RegSetValueExW");
-		return FALSE;
+	if(!KHWin32RegistrySetStringValueW(keyInProcServer32, L"ThreadingModel", L"Apartment")) {
+		KHWin32ConsoleErrorW(GetLastError(), L"KHWin32RegistrySetStringValueW");
+		RegCloseKey(keyInProcServer32);
+		goto closeKeyExtensionRoot;
 	}
 
-	return TRUE;
+	returnValue = TRUE;
+closeKeyExtensionRoot:
+	RegCloseKey(keyExtensionRoot);
+	return returnValue;
 }
