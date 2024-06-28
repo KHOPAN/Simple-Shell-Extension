@@ -34,9 +34,28 @@ BOOL RegisterInProcessServer() {
 		goto closeKeyExtensionRoot;
 	}
 
-	if(!KHWin32RegistrySetStringValueW(keyInProcServer32, L"ThreadingModel", L"Apartment")) {
+	BOOL result = KHWin32RegistrySetStringValueW(keyInProcServer32, L"ThreadingModel", L"Apartment");
+	RegCloseKey(keyInProcServer32);
+
+	if(!result) {
 		KHWin32ConsoleErrorW(GetLastError(), L"KHWin32RegistrySetStringValueW");
-		RegCloseKey(keyInProcServer32);
+		goto closeKeyExtensionRoot;
+	}
+
+	HKEY keyShellFolder;
+	error = RegCreateKeyExW(keyExtensionRoot, L"ShellFolder", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, &keyShellFolder, NULL);
+
+	if(error) {
+		KHWin32ConsoleErrorW(error, L"RegCreateKeyExW");
+		goto closeKeyExtensionRoot;
+	}
+
+	const long value = 0xA0000000;
+	error = RegSetValueExW(keyShellFolder, L"Attributes", 0, REG_DWORD, (const BYTE*) &value, sizeof(value));
+	RegCloseKey(keyShellFolder);
+
+	if(error) {
+		KHWin32ConsoleErrorW(error, L"RegSetValueExW");
 		goto closeKeyExtensionRoot;
 	}
 
